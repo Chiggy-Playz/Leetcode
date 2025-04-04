@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Create File with Template",
+            "type": "shell",
+            "command": "./create_problem.ps1 ${input:problem_number}",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "problem_number",
+            "description": "Problem Number: The number of the leetcode problem",
+            "type": "promptString",
+
+        }
+    ]
+  }
