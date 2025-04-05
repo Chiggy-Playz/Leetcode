@@ -76,3 +76,21 @@ class DoubleListNode:
 
     def __repr__(self) -> str:
         return f"<Listnode value={self.val} next={self.next.val if self.next else None} prev={self.prev.val if self.prev else None}>"
+
+    def chain(self):
+        return f"{self.val} <-> {self.next.chain() if self.next else None}"
+
+    @staticmethod
+    def generate_from(l: list[int]):
+        if not l:
+            return None
+        
+        head = DoubleListNode(l[0])
+        current = head
+        for value in l[1:]:
+            new_node = DoubleListNode(value)
+            current.next = new_node
+            new_node.prev = current
+            current = new_node
+        
+        return head
