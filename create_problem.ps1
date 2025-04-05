@@ -8,3 +8,5 @@ if ($filename -match '^[0-9]+$') {
 } else {
     Write-Output "Error: Please provide a valid integer filename."
 }
+
+code -r $padded
