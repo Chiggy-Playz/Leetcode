@@ -1,11 +1,14 @@
 from contextlib import contextmanager
 import time
-from typing import Callable, Generator, ParamSpec, TypeVar
+from typing import Callable, Generator, ParamSpec, TypeVar, cast
 
 from loguru import logger
 
+from common import ListNode
+
 P = ParamSpec("P")  # For capturing function parameters
 R = TypeVar("R")  # For capturing return type
+
 
 # A context manager that logs the time it takes to execute the block of code inside it.
 @contextmanager
@@ -25,7 +28,13 @@ def time_it(message: str, ns: bool = False) -> Generator[None, None, None]:
     logger.info(f"{message} took {meth() - start}s")
 
 
-def test(expected: R, func: Callable[P, R], *args: P.args, **kwargs: P.kwargs) -> None:
+def test(
+    expected: R,
+    equality_check: Callable[[R, R], bool] | None,
+    func: Callable[P, R],
+    *args: P.args,
+    **kwargs: P.kwargs,
+) -> None:
     """
     Test a function against expected output, with type checking.
 
@@ -34,11 +43,17 @@ def test(expected: R, func: Callable[P, R], *args: P.args, **kwargs: P.kwargs) -
         func: The function to test
         args: Positional arguments to pass to the function
         kwargs: Keyword arguments to pass to the function
+
+    Special Kwargs:
+        equality_check: Optional callable that determines if two values are equal
     """
+    equality_check = equality_check or (lambda x, y: x == y)
     actual = func(*args, **kwargs)
-    if actual != expected:
+
+    if not equality_check(actual, expected):
         print(f"Got {actual} instead of {expected}. Debugging...")
         breakpoint()
         func(*args, **kwargs)
     else:
         print(f"Correct: {func.__name__}({', '.join(map(str, args))}) = {actual}")
+

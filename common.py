@@ -67,6 +67,13 @@ class ListNode:
 
         return head
 
+    @staticmethod
+    def equals(l1: "ListNode | None", l2: "ListNode | None") -> bool:
+        if not (isinstance(l1, ListNode) and isinstance(l2, ListNode)):
+            return False
+
+        return l1.chain() == l2.chain()
+
 
 class DoubleListNode:
     def __init__(self, val=0, next: "DoubleListNode | None" = None, prev: "DoubleListNode | None" = None) -> None:
