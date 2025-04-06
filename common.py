@@ -53,6 +53,24 @@ class TreeNode:
 
         return TreeNode.equals(t1.left, t2.left) and TreeNode.equals(t1.right, t2.right)
 
+    def pretty_print(self, prefix="", is_left=True):
+        """
+        Print the tree vertically with connector lines.
+        """
+        if self is None:
+            return
+
+        # Print the right subtree first (will appear at the top)
+        if self.right:
+            self.right.pretty_print(prefix + ("│   " if is_left else "    "), False)
+
+        # Print the current node
+        connector = "└── " if is_left else "┌── "
+        print(prefix + connector + str(self.val))
+
+        # Print the left subtree (will appear at the bottom)
+        if self.left:
+            self.left.pretty_print(prefix + ("    " if is_left else "│   "), True)
 
 class ListNode:
     def __init__(self, val=0, next=None):
