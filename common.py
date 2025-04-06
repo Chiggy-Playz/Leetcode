@@ -13,7 +13,7 @@ class TreeNode:
         return f"TreeNode ({self.val})"
 
     @staticmethod
-    def generateTree(nums: list[int | None]) -> "TreeNode":
+    def generateTreeFromNums(nums: list[int | None]) -> "TreeNode":
         """
         Generates a binary tree from a list of integers. Level order traversal.
         """
@@ -40,8 +40,19 @@ class TreeNode:
         return nodes[0]
 
     @staticmethod
-    def generateFullTree(height: int = 4):
-        return TreeNode.generateTree(list(range(1, 2**height)))
+    def generateTreeFromHeight(height: int = 4):
+        return TreeNode.generateTreeFromNums(list(range(1, 2**height)))
+
+    @staticmethod
+    def equals(t1: object | None, t2: object | None):
+        if not isinstance(t1, TreeNode) or not isinstance(t2, TreeNode):
+            return t1 is t2
+
+        if t1.val != t2.val:
+            return False
+
+        return TreeNode.equals(t1.left, t2.left) and TreeNode.equals(t1.right, t2.right)
+
 
 class ListNode:
     def __init__(self, val=0, next=None):
@@ -91,7 +102,7 @@ class DoubleListNode:
     def generate_from(l: list[int]):
         if not l:
             return None
-        
+
         head = DoubleListNode(l[0])
         current = head
         for value in l[1:]:
@@ -99,5 +110,5 @@ class DoubleListNode:
             current.next = new_node
             new_node.prev = current
             current = new_node
-        
+
         return head
