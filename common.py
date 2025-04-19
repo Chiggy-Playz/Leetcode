@@ -4,7 +4,7 @@ class TreeNode:
     Class for treenode
     """
 
-    def __init__(self, val=0, left=None, right=None):
+    def __init__(self, val=0, left: "TreeNode | None" = None, right: "TreeNode | None" = None):
         self.val = val
         self.left = left
         self.right = right
@@ -53,16 +53,14 @@ class TreeNode:
 
         return TreeNode.equals(t1.left, t2.left) and TreeNode.equals(t1.right, t2.right)
 
-    def pretty_print(self, prefix="", is_left=True):
+    def display(self, prefix="", is_left=True):
         """
         Print the tree vertically with connector lines.
         """
-        if self is None:
-            return
 
         # Print the right subtree first (will appear at the top)
         if self.right:
-            self.right.pretty_print(prefix + ("│   " if is_left else "    "), False)
+            self.right.display(prefix + ("│   " if is_left else "    "), False)
 
         # Print the current node
         connector = "└── " if is_left else "┌── "
@@ -70,7 +68,8 @@ class TreeNode:
 
         # Print the left subtree (will appear at the bottom)
         if self.left:
-            self.left.pretty_print(prefix + ("    " if is_left else "│   "), True)
+            self.left.display(prefix + ("    " if is_left else "│   "), True)
+
 
 class ListNode:
     def __init__(self, val=0, next=None):
