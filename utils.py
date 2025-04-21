@@ -4,8 +4,6 @@ from typing import Callable, Generator, ParamSpec, TypeVar, cast
 
 from loguru import logger
 
-from common import ListNode
-
 P = ParamSpec("P")  # For capturing function parameters
 R = TypeVar("R")  # For capturing return type
 

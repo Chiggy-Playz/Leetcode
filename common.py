@@ -1,3 +1,5 @@
+null = None
+
 # Definition for a binary tree node.
 class TreeNode:
     """
