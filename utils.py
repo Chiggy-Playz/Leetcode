@@ -1,3 +1,4 @@
+from collections import Counter
 from contextlib import contextmanager
 import time
 from typing import Callable, Generator, ParamSpec, TypeVar, cast
@@ -55,3 +56,12 @@ def test(
     else:
         print(f"Correct: {func.__name__}({', '.join(map(str, args))}) = {actual}")
 
+
+def equal_lists_unordered(list1, list2):
+    try:
+        return Counter(list1) == Counter(list2)
+    except TypeError:
+        # Fallback for unhashable items (e.g., dicts, lists of lists)
+        return all(list1.count(item) == list2.count(item) for item in list1) and all(
+            list1.count(item) == list2.count(item) for item in list2
+        )
