@@ -131,3 +131,33 @@ class DoubleListNode:
             current = new_node
 
         return head
+
+
+class UnionFind:
+    def __init__(self, size: int) -> None:
+        self.parents = list(range(size))
+        self.size = [1] * size
+
+    def find(self, x: int):
+        if self.parents[x] != x:
+            self.parents[x] = self.find(self.parents[x])
+        return self.parents[x]
+
+    def merge(self, x: int, y: int):
+        rootX = self.find(x)
+        rootY = self.find(y)
+
+        if rootX == rootY:
+            return False
+
+        if self.size[rootY] > self.size[rootX]:
+            self.parents[rootX] = rootY
+            self.size[rootY] += self.size[rootX]
+        else:
+            self.parents[rootY] = rootX
+            self.size[rootX] += self.size[rootY]
+
+        return True
+
+    def connected(self, x: int, y: int):
+        return self.find(x) == self.find(y)
